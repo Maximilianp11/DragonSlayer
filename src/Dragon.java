@@ -1,2 +1,52 @@
 public class Dragon {
+    private int level;
+    private int health;
+    private int attackDamage;
+
+    public Dragon() {
+        level = (int) (Math.random() * 3) + 1;
+        health = 50 * level;
+        attackDamage = 6 + 3 * level;
+    }
+
+    public int attack() {
+        int damage = attackDamage;
+        int randomness = (int) (Math.random() * 5) + 1;
+        if (Math.random() > .5) {
+            damage += randomness;
+        } else {
+            damage -= randomness;
+        }
+        return damage;
+    }
+
+    public void takeDamage(int damage) {
+        health -= damage;
+    }
+
+    public void deathOutcome(Player player, Sword sword) {
+        int rnd = (int ) (Math.random() * 4) + 1;
+        if (rnd == 1) {
+            rnd = (int) (Math.random() * 26) + 10;
+            System.out.println("You receive " + rnd + " gold from the Dragon!");
+            player.addGold(rnd);
+        } else if (rnd == 2) {
+            rnd = (int) (Math.random() * 3) + 1;
+            if (rnd == 1) {
+                System.out.println("You upgraded your sword with a scale from the dragon and it's attack damage has increased by 10!");
+                sword.upgradeAP();
+            } else if (rnd == 2) {
+                System.out.println("You upgraded your sword with a scale from the dragon and it's dodge rating has increased by 10!");
+                sword.upgradeDodge();
+            } else {
+                System.out.println("You upgraded your sword with a scale from the dragon and it's attack damage and dodge rating have increased by 5!");
+            }
+        } else if (rnd == 3) {
+            System.out.println("You healed 15 health!");
+            player.heal(15);
+        } else {
+            System.out.println("The dragon did not drop anything useful");
+        }
+    }
+
 }

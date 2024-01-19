@@ -11,11 +11,11 @@ public class Sword {
         attackPower += 10;
     }
 
-    public void UpgradeDodge() {
+    public void upgradeDodge() {
         dodgeRating += 10;
     }
 
-    public void UpgradeBoth() {
+    public void upgradeBoth() {
         attackPower += 5;
         dodgeRating += 5;
     }

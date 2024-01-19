@@ -22,4 +22,12 @@ public class Player {
         health -= damage;
     }
 
+    public void addGold(int gold) {
+        this.gold += gold;
+    }
+
+    public void heal(int heal) {
+        health += heal;
+    }
+
 }
