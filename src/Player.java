@@ -13,7 +13,7 @@ public class Player {
         health = 100;
         gold = 10;
         healthPotStatus = false;
-        Sword playerSword = new Sword();
+        sword = new Sword();
     }
 
     public int attack() {

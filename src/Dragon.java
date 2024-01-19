@@ -5,8 +5,12 @@ public class Dragon {
 
     public Dragon() {
         level = (int) (Math.random() * 3) + 1;
-        health = 50 * level;
+        health = 65 + 25 * level;
         attackDamage = 6 + 3 * level;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     public int attack() {
@@ -22,6 +26,9 @@ public class Dragon {
 
     public void takeDamage(int damage) {
         health -= damage;
+        if (health < 0) {
+            health = 0;
+        }
     }
 
     public void deathOutcome(Player player, Sword sword) {
