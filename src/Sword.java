@@ -19,4 +19,12 @@ public class Sword {
         attackPower += 5;
         dodgeRating += 5;
     }
+
+    public int getAttackPower() {
+        return attackPower;
+    }
+
+    public int getDodgeRating() {
+        return dodgeRating;
+    }
 }

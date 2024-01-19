@@ -42,8 +42,9 @@ public class Dragon {
                 System.out.println("You upgraded your sword with a scale from the dragon and it's attack damage and dodge rating have increased by 5!");
             }
         } else if (rnd == 3) {
-            System.out.println("You healed 15 health!");
-            player.heal(15);
+            int healAmount = (int) (player.getMaxHealth() - player.getHealth() * 0.4);
+            System.out.println("You healed " + healAmount + " health!");
+            player.heal(healAmount);
         } else {
             System.out.println("The dragon did not drop anything useful");
         }
