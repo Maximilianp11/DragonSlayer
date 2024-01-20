@@ -31,7 +31,7 @@ public class Dragon {
         }
     }
 
-    public void deathOutcome(Player player, Sword sword) {
+    public static void deathOutcome(Player player, Sword sword) {
         int rnd = (int ) (Math.random() * 4) + 1;
         if (rnd == 1) {
             rnd = (int) (Math.random() * 26) + 10;
@@ -47,6 +47,7 @@ public class Dragon {
                 sword.upgradeDodge();
             } else {
                 System.out.println("You upgraded your sword with a scale from the dragon and it's attack damage and dodge rating have increased by 5!");
+                sword.upgradeBoth();
             }
         } else if (rnd == 3) {
             int healAmount = (int) (player.getMaxHealth() - player.getHealth() * 0.4);

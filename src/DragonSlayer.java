@@ -15,6 +15,7 @@ public class DragonSlayer {
     }
 
     public void play() {
+        boolean chargedUp = false;
         int roomNumber = 1;
         System.out.println("Welcome to Dragon Slayer!");
         System.out.println("Your task is to kill every dragon in the lair!");
@@ -31,17 +32,36 @@ public class DragonSlayer {
                     while (room1.getNextDragon().getHealth() != 0) {
                         System.out.println("Your health: " + player.getHealth());
                         System.out.println("Dragon's health: " + room1.getNextDragon().getHealth());
-                        System.out.println("What would you like to do?" + "\n1. Attack\n2. Use bandage");
+                        System.out.println("What would you like to do?" + "\n1. Attack\n2. Use bandage\n3. Charge attack");
                         String answer = scan.nextLine();
                         if (answer.equals("1") || answer.equalsIgnoreCase("attack")) {
                             int damage = player.attack();
+                            if (Math.random() > 0.95) {
+                                damage *= 2;
+                                System.out.println("Critical hit!");
+                            }
+                            if (chargedUp) {
+                                System.out.println("Charged attack!");
+                                damage = (int) (damage * (Math.random() * 1.5 + 1));
+                            }
                             System.out.println("You attack the dragon for " + damage + " damage!");
                             room1.getNextDragon().takeDamage(damage);
+                            chargedUp = false;
                             System.out.println("The dragon has " + room1.getNextDragon().getHealth() + " health remaining");
+                            if (room1.getNextDragon().getHealth() == 0) {
+                                System.out.println("You slayed a dragon!");
+                                Dragon.deathOutcome(player, sword);
+                            }
                         } else if (answer.equals("2") || answer.equalsIgnoreCase("use bandage")) {
                             System.out.println("You use a bandage and heal 5 health!");
                             player.heal(5);
+                        } else if (answer.equals("3") || answer.equalsIgnoreCase("Charge up")) {
+                            System.out.println("You are charging up a powerful attack!");
+                            chargedUp = true;
                         }
+                        int dragonDamage = room1.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
                     }
             } else if (roomNumber == 2) {
                 System.out.println("You enter the " + room2.getRoomName());
@@ -52,7 +72,6 @@ public class DragonSlayer {
             } else {
                 System.out.println("You enter the " + room5.getRoomName());
             }
-
         }
     }
 }

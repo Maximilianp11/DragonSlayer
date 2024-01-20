@@ -30,8 +30,10 @@ public class Player {
     public void takeDamage(int damage) {
         if ((int) (Math.random() * 100) + 1 < sword.getDodgeRating()) {
             health = health;
+            System.out.println("You dodged the dragon's attack!");
+        } else {
+            health -= damage;
         }
-        health -= damage;
     }
 
     public void addGold(int gold) {
