@@ -15,6 +15,7 @@ public class DragonSlayer {
     }
 
     public void play() {
+        boolean killedDragon;
         boolean chargedUp = false;
         int roomNumber = 1;
         System.out.println("Welcome to Dragon Slayer!");
@@ -25,6 +26,7 @@ public class DragonSlayer {
         Room room4 = new Room();
         Room room5 = new Room();
         while (!gameOver) {
+            killedDragon = false;
             if (roomNumber == 1) {
                 System.out.println("You enter the " + room1.getRoomName());
                 System.out.println("As you enter " + room1.getRoomName() + " you see " + room1.getDragonsInRoom() + " dragons!");
@@ -45,12 +47,17 @@ public class DragonSlayer {
                                 damage = (int) (damage * (Math.random() * 1.5 + 1));
                             }
                             System.out.println("You attack the dragon for " + damage + " damage!");
-                            room1.getNextDragon().takeDamage(damage);
-                            chargedUp = false;
-                            System.out.println("The dragon has " + room1.getNextDragon().getHealth() + " health remaining");
-                            if (room1.getNextDragon().getHealth() == 0) {
+                            if (room1.getNextDragon().getHealth() <= damage) {
+                                killedDragon = true;
+                                room1.getNextDragon().takeDamage(damage);
+                                chargedUp = false;
+                                System.out.println("The dragon has 0 health remaining");
                                 System.out.println("You slayed a dragon!");
                                 Dragon.deathOutcome(player, sword);
+                            } else {
+                                room1.getNextDragon().takeDamage(damage);
+                                chargedUp = false;
+                                System.out.println("The dragon has " + room1.getNextDragon().getHealth() + " health remaining");
                             }
                         } else if (answer.equals("2") || answer.equalsIgnoreCase("use bandage")) {
                             System.out.println("You use a bandage and heal 5 health!");
