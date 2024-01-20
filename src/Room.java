@@ -17,6 +17,7 @@ public class Room {
         dragon2 = new Dragon();
         dragon3 = new Dragon();
         roomSearched = false;
+        numRooms++;
     }
 
     public String getRoomName() {
@@ -42,7 +43,7 @@ public class Room {
             } else if (dragon2.getHealth() != 0) {
                 nextDragon = dragon2;
             } else {
-                nextDragon = getNextDragon();
+                nextDragon = dragon3;
             }
         }
         return nextDragon;

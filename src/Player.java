@@ -1,5 +1,7 @@
 import jdk.swing.interop.DragSourceContextWrapper;
 
+import java.awt.desktop.PreferencesEvent;
+
 public class Player {
     private String playerName;
     private int maxHealth;
@@ -7,6 +9,7 @@ public class Player {
     private int gold;
     private boolean healthPotStatus;
     private Sword sword;
+    private int dragonsKilled;
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -14,6 +17,7 @@ public class Player {
         gold = 10;
         healthPotStatus = false;
         sword = new Sword();
+        dragonsKilled = 0;
     }
 
     public int attack() {
@@ -34,6 +38,9 @@ public class Player {
         } else {
             health -= damage;
         }
+        if (health < 0) {
+            health = 0;
+        }
     }
 
     public void addGold(int gold) {
@@ -51,9 +58,23 @@ public class Player {
     public int getHealth() {
         return health;
     }
+    public String getPlayerName() {
+        return playerName;
+    }
 
     public Sword getSword() {
         return sword;
     }
+    public void killedADragon() {
+        dragonsKilled++;
+    }
 
+    public int calculateScore() {
+        int score = 0;
+        score += dragonsKilled * 20;
+        score += gold * 5;
+        score += sword.getAttackPower() * 10;
+        score += sword.getDodgeRating() * 10;
+        return gold;
+    }
 }

@@ -37,6 +37,7 @@ public class Dragon {
             rnd = (int) (Math.random() * 26) + 10;
             System.out.println("You receive " + rnd + " gold from the Dragon!");
             player.addGold(rnd);
+            player.killedADragon();
         } else if (rnd == 2) {
             rnd = (int) (Math.random() * 3) + 1;
             if (rnd == 1) {
@@ -49,12 +50,15 @@ public class Dragon {
                 System.out.println("You upgraded your sword with a scale from the dragon and it's attack damage and dodge rating have increased by 5!");
                 sword.upgradeBoth();
             }
+            player.killedADragon();
         } else if (rnd == 3) {
             int healAmount = (int) (player.getMaxHealth() - player.getHealth() * 0.4);
             System.out.println("You healed " + healAmount + " health!");
             player.heal(healAmount);
+            player.killedADragon();
         } else {
             System.out.println("The dragon did not drop anything useful");
+            player.killedADragon();
         }
     }
 
