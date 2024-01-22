@@ -6,6 +6,7 @@ public class Player {
     private boolean healthPotStatus;
     private Sword sword;
     private int dragonsKilled;
+    private int highestScore;
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -15,6 +16,35 @@ public class Player {
         healthPotStatus = true;
         sword = new Sword();
         dragonsKilled = 0;
+        highestScore = 0;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public boolean getHealthPotStatus() {
+        return healthPotStatus;
+    }
+    public int getHighestScore() {
+        return highestScore;
+    }
+    public Sword getSword() {
+        return sword;
+    }
+    public void setHealthPotStatusTrue() {
+        healthPotStatus = true;
+    }
+
+    public void setHealthPotStatusFalse() {
+        healthPotStatus = false;
     }
 
     public int attack() {
@@ -31,7 +61,7 @@ public class Player {
     public void takeDamage(int damage) {
         if ((int) (Math.random() * 100) + 1 < sword.getDodgeRating()) {
             health = health;
-            System.out.println("You dodged the dragon's attack!");
+            System.out.println(ColorsUtility.BLUE + "You dodged the dragon's attack!" + ColorsUtility.RESET);
         } else {
             health -= damage;
         }
@@ -51,32 +81,6 @@ public class Player {
         }
     }
 
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public boolean getHealthPotStatus() {
-        return healthPotStatus;
-    }
-
-    public void setHealthPotStatusTrue() {
-        healthPotStatus = true;
-    }
-
-    public void setHealthPotStatusFalse() {
-        healthPotStatus = false;
-    }
-
-    public Sword getSword() {
-        return sword;
-    }
     public void killedADragon() {
         dragonsKilled++;
     }
@@ -87,6 +91,9 @@ public class Player {
         score += gold * 5;
         score += sword.getAttackPower() * 10;
         score += sword.getDodgeRating() * 10;
+        if (score > highestScore) {
+            highestScore = score;
+        }
         return score;
     }
 }

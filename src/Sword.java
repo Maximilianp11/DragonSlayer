@@ -6,6 +6,13 @@ public class Sword {
         attackPower = 12;
         dodgeRating = 22;
     }
+    public int getAttackPower() {
+        return attackPower;
+    }
+
+    public int getDodgeRating() {
+        return dodgeRating;
+    }
 
     public void upgradeAP() {
         attackPower += 10;
@@ -20,11 +27,4 @@ public class Sword {
         dodgeRating += 5;
     }
 
-    public int getAttackPower() {
-        return attackPower;
-    }
-
-    public int getDodgeRating() {
-        return dodgeRating;
-    }
 }

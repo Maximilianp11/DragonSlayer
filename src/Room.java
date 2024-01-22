@@ -57,11 +57,11 @@ public class Room {
 
     public void searchRoom(Player player) {
         if (roomSearched) {
-            System.out.println("You have already searched this room");
+            System.out.println(ColorsUtility.RED + "You have already searched this room" + ColorsUtility.RESET);
         } else {
             if (Math.random() > 0.5) {
                 if (player.getHealthPotStatus()) {
-                    System.out.println("You found another potion, and since you already had one you drank it and healed for 75 health");
+                    System.out.println("You found another potion, and since you already had one you drank it and healed for" + ColorsUtility.GREEN + " 75 " + ColorsUtility.RESET + "health");
                     player.heal(75);
                 } else {
                     System.out.println("You search the room and find a health potion!");
@@ -69,7 +69,7 @@ public class Room {
                 }
             } else {
                 int rndGold = (int) (Math.random() * 51);
-                System.out.println("You search the room and find " + rndGold + " gold!") ;
+                System.out.println("You search the room and find " + ColorsUtility.YELLOW + rndGold + ColorsUtility.RESET +  " gold!") ;
                 player.addGold(rndGold);
             }
 

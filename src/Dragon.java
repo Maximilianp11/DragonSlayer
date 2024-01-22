@@ -41,26 +41,26 @@ public class Dragon {
         int rnd = (int ) (Math.random() * 10) + 1;
         if (rnd > 8) {
             rnd = (int) (Math.random() * 26) + 10;
-            System.out.println("You receive " + rnd + " gold from the Dragon!");
+            System.out.println("You receive " + ColorsUtility.YELLOW + rnd + ColorsUtility.RESET + " gold from the Dragon!");
             player.addGold(rnd);
         } else if (rnd > 5) {
             rnd = (int) (Math.random() * 3) + 1;
             if (rnd == 1) {
-                System.out.println("You upgraded your sword with a scale from the dragon and it's attack damage has increased by 10!");
+                System.out.println("You upgraded your sword with a scale from the dragon and it's " + ColorsUtility.YELLOW + " attack damage has increased by 10!" + ColorsUtility.RESET);
                 sword.upgradeAP();
             } else if (rnd == 2) {
-                System.out.println("You upgraded your sword with a scale from the dragon and it's dodge rating has increased by 10!");
+                System.out.println("You upgraded your sword with a scale from the dragon and it's" + ColorsUtility.YELLOW + " dodge rating has increased by 10!" + ColorsUtility.RESET);
                 sword.upgradeDodge();
             } else {
-                System.out.println("You upgraded your sword with a scale from the dragon and it's attack damage and dodge rating have increased by 5!");
+                System.out.println("You upgraded your sword with a scale from the dragon and it's" + ColorsUtility.YELLOW + " attack damage and dodge rating have increased by 5!" + ColorsUtility.RESET);
                 sword.upgradeBoth();
             }
         } else if (rnd > 1) {
             int healAmount = (int) ((player.getMaxHealth() - player.getHealth()) * 0.5);
-            System.out.println("You healed " + healAmount + " health!");
+            System.out.println("You healed " + ColorsUtility.GREEN + healAmount + ColorsUtility.RESET +  " health!");
             player.heal(healAmount);
         } else {
-            System.out.println("The dragon did not drop anything useful");
+            System.out.println(ColorsUtility.RED + "The dragon did not drop anything useful" + ColorsUtility.RESET);
         }
         player.killedADragon();
     }
