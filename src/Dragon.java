@@ -3,10 +3,16 @@ public class Dragon {
     private int health;
     private int attackDamage;
 
-    public Dragon() {
-        level = (int) (Math.random() * 3) + 1;
-        health = 55 + 15 * level;
-        attackDamage = 5 + 2 * level;
+    public Dragon(boolean lastRoom) {
+        if (lastRoom) {
+            level = 5;
+            health = 250;
+            attackDamage = 20;
+        } else {
+            level = (int) (Math.random() * 3) + 1;
+            health = 55 + 15 * level;
+            attackDamage = 5 + 2 * level;
+        }
     }
 
     public int getHealth() {

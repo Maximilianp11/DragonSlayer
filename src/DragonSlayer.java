@@ -15,11 +15,11 @@ public class DragonSlayer {
     }
 
     public void play() {
-        Room room1 = new Room();
-        Room room2 = new Room();
-        Room room3 = new Room();
-        Room room4 = new Room();
-        Room room5 = new Room();
+        Room room1 = new Room(false);
+        Room room2 = new Room(false);
+        Room room3 = new Room(false);
+        Room room4 = new Room(false);
+        Room room5 = new Room(true);
         System.out.println("Hello " + player.getPlayerName() + " Welcome to Dragon Slayer!");
         System.out.println("Your task is to kill every dragon in the lair!");
         if (player.getHealth() != 0) {
@@ -60,6 +60,7 @@ public class DragonSlayer {
             if (playerAnswer.equalsIgnoreCase("1") || playerAnswer.equalsIgnoreCase("Search the room")) {
                 room.searchRoom(player);
                 if (player.getHealthPotStatus()) {
+                    System.out.println("Your health :" + player.getHealth());
                     System.out.println("Would you like to use a healing potion? (Yes/No)");
                     playerAnswer = scan.nextLine();
                     if (playerAnswer.equalsIgnoreCase("Yes")) {
@@ -310,7 +311,7 @@ public class DragonSlayer {
         while (player.getHealth() != 0 && room5.getNextDragon().getHealth() != 0) {
             boolean chargedUp = false;
             System.out.println("You enter the " + room5.getRoomName());
-            System.out.println("As you enter " + room5.getRoomName() + " you see " + room5.getDragonsInRoom() + " dragons!");
+            System.out.println("As you enter " + room5.getRoomName() + " you see one giant golden dragon!");
             System.out.println("You ready your sword and prepare to fight!");
             while (room5.getNextDragon().getHealth() != 0 && player.getHealth() != 0) {
                 System.out.println("Your health: " + player.getHealth());

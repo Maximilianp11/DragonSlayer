@@ -10,14 +10,20 @@ public class Room {
     private Dragon dragon3;
 
 
-    public Room() {
-        roomName = roomList[numRooms];
-        dragonsInRoom = (int) (Math.random() * 3) + 1;
-        dragon1 = new Dragon();
-        dragon2 = new Dragon();
-        dragon3 = new Dragon();
-        roomSearched = false;
-        numRooms++;
+    public Room(boolean lastRoom) {
+        if (lastRoom) {
+            roomName = roomList[numRooms];
+            dragonsInRoom = 1;
+            dragon1 = new Dragon(true);
+        } else {
+            roomName = roomList[numRooms];
+            dragonsInRoom = (int) (Math.random() * 3) + 1;
+            dragon1 = new Dragon(false);
+            dragon2 = new Dragon(false);
+            dragon3 = new Dragon(false);
+            roomSearched = false;
+            numRooms++;
+        }
     }
 
     public String getRoomName() {

@@ -9,8 +9,8 @@ public class Player {
 
     public Player(String playerName) {
         this.playerName = playerName;
-        health = 100;
-        maxHealth = 100;
+        health = 150;
+        maxHealth = 150;
         gold = 10;
         healthPotStatus = true;
         sword = new Sword();
@@ -47,7 +47,7 @@ public class Player {
     public void heal(int heal) {
         health += heal;
         if (health > maxHealth) {
-            health = 100;
+            health = 150;
         }
     }
 
