@@ -15,41 +15,75 @@ public class DragonSlayer {
     }
 
     public void play() {
+        Room room1 = new Room();
+        Room room2 = new Room();
+        Room room3 = new Room();
+        Room room4 = new Room();
+        Room room5 = new Room();
         System.out.println("Hello " + player.getPlayerName() + " Welcome to Dragon Slayer!");
         System.out.println("Your task is to kill every dragon in the lair!");
-        playRoom1();
         if (player.getHealth() != 0) {
-            playRoom2();
+            playRoom1(room1);
         }
         if (player.getHealth() != 0) {
-            playRoom3();
+            afterCombat(room1);
+            playRoom2(room2);
         }
         if (player.getHealth() != 0) {
-            playRoom4();
+            afterCombat(room2);
+            playRoom3(room3);
         }
         if (player.getHealth() != 0) {
-            playRoom5();
+            afterCombat(room3);
+            playRoom4(room4);
+        }
+        if (player.getHealth() != 0) {
+            afterCombat(room4);
+            playRoom5(room5);
         }
         if (player.getHealth() == 0) {
             System.out.println("You lose!");
             System.out.println("Your final score was: " + player.calculateScore());
         } else {
-            System.out.println("Congratulations " +  player.getPlayerName() + " You slayed all the dragons in the liar!");
+            System.out.println("Congratulations " +  player.getPlayerName() + " You slayed all the dragons in the lair!");
             System.out.println("Your final score was " + player.calculateScore());
         }
     }
 
-    public void playRoom1() {
-        while (player.getHealth() != 0) {
-            Room room1 = new Room();
+    public void afterCombat(Room room) {
+        String playerAnswer = "";
+        System.out.println("You look around the room and see no dragons remaining");
+        while (!(playerAnswer.equalsIgnoreCase("continue onwards") || playerAnswer.equalsIgnoreCase("2"))) {
+            System.out.println("What would you like to do?");
+            System.out.println("1. Search the room\n2. Continue onwards");
+            playerAnswer = scan.nextLine();
+            if (playerAnswer.equalsIgnoreCase("1") || playerAnswer.equalsIgnoreCase("Search the room")) {
+                room.searchRoom(player);
+                if (player.getHealthPotStatus()) {
+                    System.out.println("Would you like to use a healing potion? (Yes/No)");
+                    playerAnswer = scan.nextLine();
+                    if (playerAnswer.equalsIgnoreCase("Yes")) {
+                        System.out.println("You use the health potion and heal 75 health!");
+                        player.heal(75);
+                        player.setHealthPotStatusFalse();
+                    } else {
+                        System.out.println("You pocket the healing potion and save it for later");
+                    }
+                }
+            }
+        }
+    }
+
+    public void playRoom1(Room room1) {
+        while (player.getHealth() != 0 && room1.getNextDragon().getHealth() != 0) {
             boolean chargedUp = false;
             System.out.println("You enter the " + room1.getRoomName());
             System.out.println("As you enter " + room1.getRoomName() + " you see " + room1.getDragonsInRoom() + " dragons!");
             System.out.println("You ready your sword and prepare to fight!");
-            while (room1.getNextDragon().getHealth() != 0) {
+            while (room1.getNextDragon().getHealth() != 0 && player.getHealth() != 0) {
                 System.out.println("Your health: " + player.getHealth());
                 System.out.println("Dragon's health: " + room1.getNextDragon().getHealth());
-                System.out.println("What would you like to do?" + "\n1. Attack\n2. Charge attack");
+                System.out.println("What would you like to do?" + "\n1. Attack\n2. Charge attack\n3. Use healing potion");
                 String answer = scan.nextLine();
                 if (answer.equals("1") || answer.equalsIgnoreCase("attack")) {
                     int damage = player.attack();
@@ -72,29 +106,42 @@ public class DragonSlayer {
                         room1.getNextDragon().takeDamage(damage);
                         chargedUp = false;
                         System.out.println("The dragon has " + room1.getNextDragon().getHealth() + " health remaining");
+                        int dragonDamage = room1.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
                     }
                 } else if (answer.equals("2") || answer.equalsIgnoreCase("Charge up")) {
                     System.out.println("You are charging up a powerful attack!");
                     chargedUp = true;
+                    int dragonDamage = room1.getNextDragon().attack();
+                    System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                    player.takeDamage(dragonDamage);
+                } else if (answer.equals("3") || answer.equalsIgnoreCase("Use healing potion")) {
+                    if (player.getHealthPotStatus()) {
+                        System.out.println("You use a potion and heal 75 health");
+                        player.heal(75);
+                        player.setHealthPotStatusFalse();
+                        int dragonDamage = room1.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
+                    } else {
+                        System.out.println("You do not have a healing potion");
+                    }
                 }
-                int dragonDamage = room1.getNextDragon().attack();
-                System.out.println("The dragon attacked you for " + dragonDamage + " damage");
-                player.takeDamage(dragonDamage);
             }
         }
     }
 
-    public void playRoom2() {
-        while (player.getHealth() != 0) {
-            Room room2 = new Room();
+    public void playRoom2(Room room2) {
+        while (player.getHealth() != 0 && room2.getNextDragon().getHealth() != 0) {
             boolean chargedUp = false;
             System.out.println("You enter the " + room2.getRoomName());
             System.out.println("As you enter " + room2.getRoomName() + " you see " + room2.getDragonsInRoom() + " dragons!");
             System.out.println("You ready your sword and prepare to fight!");
-            while (room2.getNextDragon().getHealth() != 0) {
+            while (room2.getNextDragon().getHealth() != 0 && player.getHealth() != 0) {
                 System.out.println("Your health: " + player.getHealth());
                 System.out.println("Dragon's health: " + room2.getNextDragon().getHealth());
-                System.out.println("What would you like to do?" + "\n1. Attack\n2. Charge attack");
+                System.out.println("What would you like to do?" + "\n1. Attack\n2. Charge attack\n3. Use healing potion");
                 String answer = scan.nextLine();
                 if (answer.equals("1") || answer.equalsIgnoreCase("attack")) {
                     int damage = player.attack();
@@ -117,29 +164,42 @@ public class DragonSlayer {
                         room2.getNextDragon().takeDamage(damage);
                         chargedUp = false;
                         System.out.println("The dragon has " + room2.getNextDragon().getHealth() + " health remaining");
+                        int dragonDamage = room2.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
                     }
                 } else if (answer.equals("2") || answer.equalsIgnoreCase("Charge up")) {
                     System.out.println("You are charging up a powerful attack!");
                     chargedUp = true;
+                    int dragonDamage = room2.getNextDragon().attack();
+                    System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                    player.takeDamage(dragonDamage);
+                } else if (answer.equals("3") || answer.equalsIgnoreCase("Use healing potion")) {
+                    if (player.getHealthPotStatus()) {
+                        System.out.println("You use a potion and heal 75 health");
+                        player.heal(75);
+                        player.setHealthPotStatusFalse();
+                        int dragonDamage = room2.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
+                    } else {
+                        System.out.println("You do not have a healing potion");
+                    }
                 }
-                int dragonDamage = room2.getNextDragon().attack();
-                System.out.println("The dragon attacked you for " + dragonDamage + " damage");
-                player.takeDamage(dragonDamage);
             }
         }
     }
 
-    public void playRoom3() {
-        while (player.getHealth() != 0) {
-            Room room3 = new Room();
+    public void playRoom3(Room room3) {
+        while (player.getHealth() != 0 && room3.getNextDragon().getHealth() != 0) {
             boolean chargedUp = false;
             System.out.println("You enter the " + room3.getRoomName());
             System.out.println("As you enter " + room3.getRoomName() + " you see " + room3.getDragonsInRoom() + " dragons!");
             System.out.println("You ready your sword and prepare to fight!");
-            while (room3.getNextDragon().getHealth() != 0) {
+            while (room3.getNextDragon().getHealth() != 0 && player.getHealth() != 0) {
                 System.out.println("Your health: " + player.getHealth());
                 System.out.println("Dragon's health: " + room3.getNextDragon().getHealth());
-                System.out.println("What would you like to do?" + "\n1. Attack\n2. Charge attack");
+                System.out.println("What would you like to do?" + "\n1. Attack\n2. Charge attack\n3. Use healing potion");
                 String answer = scan.nextLine();
                 if (answer.equals("1") || answer.equalsIgnoreCase("attack")) {
                     int damage = player.attack();
@@ -162,29 +222,42 @@ public class DragonSlayer {
                         room3.getNextDragon().takeDamage(damage);
                         chargedUp = false;
                         System.out.println("The dragon has " + room3.getNextDragon().getHealth() + " health remaining");
+                        int dragonDamage = room3.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
                     }
                 } else if (answer.equals("2") || answer.equalsIgnoreCase("Charge up")) {
                     System.out.println("You are charging up a powerful attack!");
                     chargedUp = true;
+                    int dragonDamage = room3.getNextDragon().attack();
+                    System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                    player.takeDamage(dragonDamage);
+                } else if (answer.equals("3") || answer.equalsIgnoreCase("Use healing potion")) {
+                    if (player.getHealthPotStatus()) {
+                        System.out.println("You use a potion and heal 75 health");
+                        player.heal(75);
+                        player.setHealthPotStatusFalse();
+                        int dragonDamage = room3.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
+                    } else {
+                        System.out.println("You do not have a healing potion");
+                    }
                 }
-                int dragonDamage = room3.getNextDragon().attack();
-                System.out.println("The dragon attacked you for " + dragonDamage + " damage");
-                player.takeDamage(dragonDamage);
             }
         }
     }
 
-    public void playRoom4() {
-        while (player.getHealth() != 0) {
-            Room room4 = new Room();
+    public void playRoom4(Room room4) {
+        while (player.getHealth() != 0 && room4.getNextDragon().getHealth() != 0) {
             boolean chargedUp = false;
             System.out.println("You enter the " + room4.getRoomName());
             System.out.println("As you enter " + room4.getRoomName() + " you see " + room4.getDragonsInRoom() + " dragons!");
             System.out.println("You ready your sword and prepare to fight!");
-            while (room4.getNextDragon().getHealth() != 0) {
+            while (room4.getNextDragon().getHealth() != 0 && player.getHealth() != 0) {
                 System.out.println("Your health: " + player.getHealth());
                 System.out.println("Dragon's health: " + room4.getNextDragon().getHealth());
-                System.out.println("What would you like to do?" + "\n1. Attack\n2. Charge attack");
+                System.out.println("What would you like to do?" + "\n1. Attack\n2. Charge attack\n3. Use healing potion");
                 String answer = scan.nextLine();
                 if (answer.equals("1") || answer.equalsIgnoreCase("attack")) {
                     int damage = player.attack();
@@ -207,29 +280,42 @@ public class DragonSlayer {
                         room4.getNextDragon().takeDamage(damage);
                         chargedUp = false;
                         System.out.println("The dragon has " + room4.getNextDragon().getHealth() + " health remaining");
+                        int dragonDamage = room4.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
                     }
                 } else if (answer.equals("2") || answer.equalsIgnoreCase("Charge up")) {
                     System.out.println("You are charging up a powerful attack!");
                     chargedUp = true;
+                    int dragonDamage = room4.getNextDragon().attack();
+                    System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                    player.takeDamage(dragonDamage);
+                } else if (answer.equals("3") || answer.equalsIgnoreCase("Use healing potion")) {
+                    if (player.getHealthPotStatus()) {
+                        System.out.println("You use a potion and heal 75 health");
+                        player.heal(75);
+                        player.setHealthPotStatusFalse();
+                        int dragonDamage = room4.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
+                    } else {
+                        System.out.println("You do not have a healing potion");
+                    }
                 }
-                int dragonDamage = room4.getNextDragon().attack();
-                System.out.println("The dragon attacked you for " + dragonDamage + " damage");
-                player.takeDamage(dragonDamage);
             }
         }
     }
 
-    public void playRoom5() {
-        while (player.getHealth() != 0) {
-            Room room5 = new Room();
+    public void playRoom5(Room room5) {
+        while (player.getHealth() != 0 && room5.getNextDragon().getHealth() != 0) {
             boolean chargedUp = false;
             System.out.println("You enter the " + room5.getRoomName());
             System.out.println("As you enter " + room5.getRoomName() + " you see " + room5.getDragonsInRoom() + " dragons!");
             System.out.println("You ready your sword and prepare to fight!");
-            while (room5.getNextDragon().getHealth() != 0) {
+            while (room5.getNextDragon().getHealth() != 0 && player.getHealth() != 0) {
                 System.out.println("Your health: " + player.getHealth());
                 System.out.println("Dragon's health: " + room5.getNextDragon().getHealth());
-                System.out.println("What would you like to do?" + "\n1. Attack\n2. Charge attack");
+                System.out.println("What would you like to do?" + "\n1. Attack\n2. Charge attack\n3. Use healing potion");
                 String answer = scan.nextLine();
                 if (answer.equals("1") || answer.equalsIgnoreCase("attack")) {
                     int damage = player.attack();
@@ -252,14 +338,28 @@ public class DragonSlayer {
                         room5.getNextDragon().takeDamage(damage);
                         chargedUp = false;
                         System.out.println("The dragon has " + room5.getNextDragon().getHealth() + " health remaining");
+                        int dragonDamage = room5.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
                     }
                 } else if (answer.equals("2") || answer.equalsIgnoreCase("Charge up")) {
                     System.out.println("You are charging up a powerful attack!");
                     chargedUp = true;
+                    int dragonDamage = room5.getNextDragon().attack();
+                    System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                    player.takeDamage(dragonDamage);
+                } else if (answer.equals("3") || answer.equalsIgnoreCase("Use healing potion")) {
+                    if (player.getHealthPotStatus()) {
+                        System.out.println("You use a potion and heal 75 health");
+                        player.heal(75);
+                        player.setHealthPotStatusFalse();
+                        int dragonDamage = room5.getNextDragon().attack();
+                        System.out.println("The dragon attacked you for " + dragonDamage + " damage");
+                        player.takeDamage(dragonDamage);
+                    } else {
+                        System.out.println("You do not have a healing potion");
+                    }
                 }
-                int dragonDamage = room5.getNextDragon().attack();
-                System.out.println("The dragon attacked you for " + dragonDamage + " damage");
-                player.takeDamage(dragonDamage);
             }
         }
     }

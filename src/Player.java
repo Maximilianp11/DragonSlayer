@@ -1,7 +1,3 @@
-import jdk.swing.interop.DragSourceContextWrapper;
-
-import java.awt.desktop.PreferencesEvent;
-
 public class Player {
     private String playerName;
     private int maxHealth;
@@ -14,8 +10,9 @@ public class Player {
     public Player(String playerName) {
         this.playerName = playerName;
         health = 100;
+        maxHealth = 100;
         gold = 10;
-        healthPotStatus = false;
+        healthPotStatus = true;
         sword = new Sword();
         dragonsKilled = 0;
     }
@@ -49,6 +46,9 @@ public class Player {
 
     public void heal(int heal) {
         health += heal;
+        if (health > maxHealth) {
+            health = 100;
+        }
     }
 
     public int getMaxHealth() {
@@ -60,6 +60,18 @@ public class Player {
     }
     public String getPlayerName() {
         return playerName;
+    }
+
+    public boolean getHealthPotStatus() {
+        return healthPotStatus;
+    }
+
+    public void setHealthPotStatusTrue() {
+        healthPotStatus = true;
+    }
+
+    public void setHealthPotStatusFalse() {
+        healthPotStatus = false;
     }
 
     public Sword getSword() {
@@ -75,6 +87,6 @@ public class Player {
         score += gold * 5;
         score += sword.getAttackPower() * 10;
         score += sword.getDodgeRating() * 10;
-        return gold;
+        return score;
     }
 }

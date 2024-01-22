@@ -5,8 +5,8 @@ public class Dragon {
 
     public Dragon() {
         level = (int) (Math.random() * 3) + 1;
-        health = 65 + 25 * level;
-        attackDamage = 6 + 3 * level;
+        health = 55 + 15 * level;
+        attackDamage = 5 + 2 * level;
     }
 
     public int getHealth() {
@@ -32,13 +32,12 @@ public class Dragon {
     }
 
     public static void deathOutcome(Player player, Sword sword) {
-        int rnd = (int ) (Math.random() * 4) + 1;
-        if (rnd == 1) {
+        int rnd = (int ) (Math.random() * 10) + 1;
+        if (rnd > 8) {
             rnd = (int) (Math.random() * 26) + 10;
             System.out.println("You receive " + rnd + " gold from the Dragon!");
             player.addGold(rnd);
-            player.killedADragon();
-        } else if (rnd == 2) {
+        } else if (rnd > 5) {
             rnd = (int) (Math.random() * 3) + 1;
             if (rnd == 1) {
                 System.out.println("You upgraded your sword with a scale from the dragon and it's attack damage has increased by 10!");
@@ -50,16 +49,14 @@ public class Dragon {
                 System.out.println("You upgraded your sword with a scale from the dragon and it's attack damage and dodge rating have increased by 5!");
                 sword.upgradeBoth();
             }
-            player.killedADragon();
-        } else if (rnd == 3) {
-            int healAmount = (int) (player.getMaxHealth() - player.getHealth() * 0.4);
+        } else if (rnd > 1) {
+            int healAmount = (int) ((player.getMaxHealth() - player.getHealth()) * 0.5);
             System.out.println("You healed " + healAmount + " health!");
             player.heal(healAmount);
-            player.killedADragon();
         } else {
             System.out.println("The dragon did not drop anything useful");
-            player.killedADragon();
         }
+        player.killedADragon();
     }
 
 }

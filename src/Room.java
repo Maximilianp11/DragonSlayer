@@ -48,4 +48,26 @@ public class Room {
         }
         return nextDragon;
     }
+
+    public void searchRoom(Player player) {
+        if (roomSearched) {
+            System.out.println("You have already searched this room");
+        } else {
+            if (Math.random() > 0.5) {
+                if (player.getHealthPotStatus()) {
+                    System.out.println("You found another potion, and since you already had one you drank it and healed for 75 health");
+                    player.heal(75);
+                } else {
+                    System.out.println("You search the room and find a health potion!");
+                    player.setHealthPotStatusTrue();
+                }
+            } else {
+                int rndGold = (int) (Math.random() * 51);
+                System.out.println("You search the room and find " + rndGold + " gold!") ;
+                player.addGold(rndGold);
+            }
+
+        }
+        roomSearched = true;
+    }
 }

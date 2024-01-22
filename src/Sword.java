@@ -3,8 +3,8 @@ public class Sword {
     private int dodgeRating;
 
     public Sword() {
-        attackPower = 15;
-        dodgeRating = 15;
+        attackPower = 12;
+        dodgeRating = 22;
     }
 
     public void upgradeAP() {
